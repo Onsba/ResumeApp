@@ -1,0 +1,7 @@
+{
+  "name": "ResumeApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
