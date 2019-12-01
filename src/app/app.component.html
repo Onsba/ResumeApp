@@ -1,3 +1,25 @@
+// A side menu navigation for every page - Oona Laitinen 1702547
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu type="overlay" side="start" menuId="first" contentId="content1">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item *ngFor="let pages of navigate" [routerLink]="pages.url" routerDirection="forward">
+            <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+            {{pages.title}}
+          </ion-item>
+          <ion-item routerLink="/login" routerDirection="forward" (click)="logout()">
+            <ion-icon name="log-out" slot="start"></ion-icon>
+            Logout
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content1"></ion-router-outlet>
 </ion-app>

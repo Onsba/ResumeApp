@@ -1,49 +1,56 @@
 import { Injectable } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs';
-import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(
-    private storage: Storage,
-    private platform: Platform,
-    private router: Router) {}
+  constructor(private router: Router, private afAuth: AngularFireAuth) {
+  }
 
   authState = new BehaviorSubject(false);
 
-  // Checks if the user is logged in
-  // Oona Laitinen 1702547
-  isAuthenticated() {
-    return window.localStorage.getItem('loggedIn') === 'yes';
-  }
-
-  // Checks if the user and the password are correct to login
-  // Oona Laitinen 1702547
-  login(form: NgForm) {
-    const user = form.value.username;
-    const password = form.value.password;
-
-    const loggedIn = user === 'Oona' && password === 'OonaPassword';
-    window.localStorage.setItem('loggedIn', 'yes');
-
-    if (loggedIn) {
-      this.router.navigateByUrl('/home');
+  // Checks if the user user is logged in and can access the pages - Oona Laitinen 1702547
+  canActivate() {
+    if (window.localStorage.getItem('loggedIn') !== 'yes') {
+      this.router.navigateByUrl('/login');
+      return false;
     }
 
-    return loggedIn;
+    return true;
   }
 
-  // Logs out the user by deleting stored session
-  // Oona Laitinen 1702547
+  // Checks if the user and the password are correct to login - Oona Laitinen 1702547
+  login(value) {
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
+        .then(() => {
+          window.localStorage.setItem('loggedIn', 'yes');
+          resolve();
+        }).catch((error) => {
+          console.log(error);
+          reject();
+        });
+    });
+  }
+
+  // Logs out the user by deleting stored session - Oona Laitinen 1702547
   logout() {
-    window.localStorage.removeItem('loggedIn');
-    this.router.navigateByUrl('/login');
+    return new Promise((resolve, reject) => {
+      this.afAuth.auth.signOut()
+        .then(() => {
+          window.localStorage.removeItem('loggedIn');
+          this.router.navigateByUrl('/login');
+          resolve();
+        }).catch((error) => {
+          console.log(error);
+          reject();
+        });
+    });
   }
-
 }

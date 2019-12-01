@@ -1,28 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 
   constructor(private router: Router, private auth: AuthenticationService) { }
 
-  ngOnInit() {
-  }
-
-  // Attempt to login and show error message on failure
-  // Oona Laitinen 1702547
+  // Attempt to login, goes to the main page if successful - Oona Laitinen 1702547
   login(form) {
-    if (!this.auth.login(form)) {
-      document.getElementById('bad-login').style.display = 'block';
-    } else {
+    this.auth.login(form.form.value).then(res => {
       document.getElementById('bad-login').style.display = 'none';
-    }
+      this.router.navigateByUrl('');
+    }, err => {
+      document.getElementById('bad-login').style.display = 'block';
+      console.log(err);
+    });
   }
 
 }

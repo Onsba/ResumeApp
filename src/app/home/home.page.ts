@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 
-import { AuthenticationService } from '../services/authentication.service';
-import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -10,9 +7,5 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  constructor(private auth: AuthenticationService, private router: Router) {}
-
-  logout() {
-    this.auth.logout();
-  }
+  constructor() {}
 }

@@ -1,14 +1,29 @@
-<!-- Homepage of the app with a logout button-->
+<!-- Oona Laitinen 1702547-->
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      About
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Adds a picture with a description-->
 <!-- Oona Laitinen 1702547-->
 <ion-content>
-  <a href="/about" class="button">ABOUT</a>
-  <a href="/cv" class="button">CV</a>
-  <a href="/projects" class="button">PROJECT WORKS</a>
-  <a href="/extra" class="button">EXTRA CURRICULUM</a>
-  <a href="/contact" class="button">CONTACT</a>
-  <ion-fab vertical="fixed" horizontal="center">
-    <ion-fab-button class="ion-margin-top" color="light" (click)="logout()">
-      <ion-icon color="dark" name="log-out"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <ion-avatar class="myphoto" style="margin-top: 20px">
+    <img src="assets/img/Oona.jpg">
+  </ion-avatar>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center" class="ion-margin-end ion-margin-start">
+        <h5 class="ion-align-self-center" style="padding: 15px; border: 1px solid grey; color: grey">
+          BBA student in Information Technology with excellent language and listening skills. I am a great
+          team-worker and my communication skills are superb. I am detail oriented, organized and creative.
+        </h5>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
